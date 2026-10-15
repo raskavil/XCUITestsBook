@@ -1,0 +1,36 @@
+---
+interface Props {
+  filename: string;
+  html: string;
+  raw: string;
+  label?: string;
+  preview?: { src: string; alt: string };
+}
+const { filename, html, raw, label, preview } = Astro.props;
+---
+<div class="code-panel" data-code-panel>
+  <div class="code-bar">
+    <span>{filename}</span>
+    <div class="code-tools">
+      {label && <span>{label}</span>}
+      {
+        preview && (
+          <div class="view-switch" role="group" aria-label="View">
+            <button type="button" data-view-btn="code" aria-pressed="true">Code</button>
+            <button type="button" data-view-btn="preview" aria-pressed="false">Preview</button>
+          </div>
+        )
+      }
+      <button type="button" class="code-copy" data-copy>Copy</button>
+    </div>
+  </div>
+  <div class="code-body" data-view="code" set:html={html} />
+  {
+    preview && (
+      <div class="code-preview" data-view="preview" hidden>
+        <img src={preview.src} alt={preview.alt} loading="lazy" />
+      </div>
+    )
+  }
+  <template data-raw>{raw}</template>
+</div>

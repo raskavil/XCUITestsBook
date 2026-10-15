@@ -1,0 +1,48 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ChapterBar from '../../components/ChapterBar.astro';
+import Pager from '../../components/Pager.astro';
+import { getBook, url } from '../../lib/book';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('reading');
+  return entries.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const chapters = await getBook();
+const chapter = chapters.find((c) => c.id === entry.data.chapter.id)!;
+const toc = headings.filter((h) => h.depth === 2);
+---
+<Base title={entry.data.title} description={entry.data.abstract}>
+  <ChapterBar chapter={chapter} mode="read" />
+  <div class="wrap reading">
+    <article class="reading-main">
+      <p class="page-kicker">Chapter {chapter.number}</p>
+      <h1 class="page-title">{entry.data.title}</h1>
+      <p class="page-abstract">{entry.data.abstract}</p>
+      <div class="page-meta">
+        <span>{entry.data.minutes} min read</span>
+        {chapter.practice[0] && <a href={chapter.practice[0].href}>Practice this chapter</a>}
+      </div>
+      <div class="prose">
+        <Content />
+      </div>
+    </article>
+    {
+      toc.length > 1 && (
+        <aside class="reading-aside">
+          <nav aria-label="On this page">
+            <p class="aside-title">On this page</p>
+            {toc.map((h) => (
+              <a href={`#${h.slug}`}>{h.text}</a>
+            ))}
+          </nav>
+        </aside>
+      )
+    }
+  </div>
+  <Pager chapters={chapters} href={url(`read/${entry.id}/`)} />
+</Base>

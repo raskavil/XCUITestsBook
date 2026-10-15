@@ -1,0 +1,52 @@
+---
+import CodePanel from './CodePanel.astro';
+
+interface Step {
+  title: string;
+  textHtml: string;
+  raw: string;
+  codeHtml: string;
+  filename: string;
+  preview?: { src: string; alt: string };
+}
+interface Props {
+  steps: Step[];
+}
+const { steps } = Astro.props;
+---
+<div class="stepper" data-stepper>
+  <div class="stepper-steps">
+    <ol class="steps">
+      {
+        steps.map((s, i) => (
+          <li>
+            <button type="button" class:list={['step', { 'is-active': i === 0 }]} data-step aria-pressed={i === 0 ? 'true' : 'false'}>
+              <span class="step-dot" aria-hidden="true">{i + 1}</span>
+              <span class="step-body">
+                <span class="step-title">{s.title}</span>
+                <span class="step-text" set:html={s.textHtml} />
+              </span>
+            </button>
+          </li>
+        ))
+      }
+    </ol>
+    {
+      steps.length > 1 && (
+        <div class="stepper-nav">
+          <button type="button" class="btn btn-ghost" data-prev>Previous step</button>
+          <button type="button" class="btn btn-primary" data-next>Next step</button>
+        </div>
+      )
+    }
+  </div>
+  <div class="stepper-panels">
+    {
+      steps.map((s, i) => (
+        <div class:list={['panel', { 'is-active': i === 0 }]} data-panel>
+          <CodePanel filename={s.filename} html={s.codeHtml} raw={s.raw} label={`Step ${i + 1} of ${steps.length}`} preview={s.preview} />
+        </div>
+      ))
+    }
+  </div>
+</div>

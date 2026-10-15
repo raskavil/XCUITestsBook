@@ -1,0 +1,61 @@
+chapter: 06-page-object
+title: Build a Page Object
+abstract: Wrap the login screen in a small Swift type, then rewrite a brittle login test into three readable lines.
+minutes: 25
+
+sections:
+  - title: Describe the screen
+    intro: A page object owns the queries for one screen. Tests never touch `app.buttons[…]` directly again.
+    steps:
+      - title: Create the type
+        text: Add **LoginScreen.swift** to the UI test target with a struct that holds the running app.
+        code: 06-page-object/LoginScreen-01.swift
+        filename: LoginScreen.swift
+        highlight: ["3-5"]
+      - title: Expose the controls
+        text: Add one computed property per control, using the accessibility identifiers from Chapter 4.
+        code: 06-page-object/LoginScreen-02.swift
+        filename: LoginScreen.swift
+        highlight: ["6-8"]
+      - title: Add a visibility check
+        text: "`isVisible` waits for the email field, so callers can assert they landed on the right screen."
+        code: 06-page-object/LoginScreen-03.swift
+        filename: LoginScreen.swift
+        highlight: ["10-12"]
+
+  - title: Add actions that return the next screen
+    intro: Returning the destination page object lets tests chain steps and fail at the exact screen that broke.
+    steps:
+      - title: Describe the destination
+        text: Create **DashboardScreen.swift** with the same shape — the app, a root element and `isVisible`.
+        code: 06-page-object/DashboardScreen-01.swift
+        filename: DashboardScreen.swift
+        highlight: ["3-11"]
+      - title: Add the login action
+        text: "`logIn(email:password:)` fills the form, taps submit and returns a `DashboardScreen`. Mark it `@discardableResult` so tests can ignore the return value."
+        code: 06-page-object/LoginScreen-04.swift
+        filename: LoginScreen.swift
+        highlight: ["14-22"]
+
+  - title: Rewrite the login test
+    intro: Now replace the raw queries in the existing test with the two page objects.
+    steps:
+      - title: Start from the brittle test
+        text: Every line repeats an identifier, and the assertion is buried at the end.
+        code: 06-page-object/LoginTests-01.swift
+        filename: LoginTests.swift
+        highlight: ["8-14"]
+      - title: Use the page objects
+        text: The test now states the flow and the expectation — nothing else.
+        code: 06-page-object/LoginTests-02.swift
+        filename: LoginTests.swift
+        highlight: ["8-11"]
+
+quiz:
+  question: Where should the query for the login button live?
+  options:
+    - Inside each test method that needs it
+    - On the LoginScreen page object
+    - In the app target, next to the view
+  answer: 1
+  explanation: One place to update when the identifier changes, and tests stay focused on behaviour.

@@ -1,0 +1,74 @@
+---
+import Base from '../layouts/Base.astro';
+import { book, flatten, getBook, modeBlurb, modeLabel, modes, parts } from '../lib/book';
+
+const chapters = await getBook();
+const first = flatten(chapters)[0];
+const partNumbers = [...new Set(chapters.map((c) => c.part))].sort();
+---
+<Base title={book.title}>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-main">
+        <p class="hero-kicker">{book.kicker}</p>
+        <h1 class="hero-title">{book.title}</h1>
+        <p class="hero-lede">{book.tagline}</p>
+        <div class="hero-actions">
+          {first && <a class="btn btn-hero" href={first.href}>Start reading</a>}
+          <span>{chapters.length} chapters</span>
+        </div>
+      </div>
+      <div class="hero-card">
+        <p class="hero-card-title">Every chapter has three modes</p>
+        {
+          modes.map((m, i) => (
+            <div class="row">
+              <span class="num">{i + 1}</span>
+              <span class="row-text">
+                <span>{modeLabel[m]}</span>
+                <span class="row-sub">{modeBlurb[m]}</span>
+              </span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap" id="chapters">
+    {
+      partNumbers.map((p) => (
+        <section class="part" aria-labelledby={`part-${p}`}>
+          <h2 class="part-title" id={`part-${p}`}>
+            <span>Part {p}</span> {parts[p]}
+          </h2>
+          <ol class="chapter-list">
+            {chapters
+              .filter((c) => c.part === p)
+              .map((c) => (
+                <li class="chapter-row">
+                  <span class="chapter-num">{c.number}</span>
+                  <div class="chapter-text">
+                    <h3 class="chapter-title">{c.title}</h3>
+                    <p class="chapter-summary">{c.summary}</p>
+                  </div>
+                  <div class="chapter-modes">
+                    {modes.map((m) => {
+                      const s = c[m][0];
+                      return s ? (
+                        <a class="chip" href={s.href} data-progress-key={m === 'challenge' ? `uitb:challenge:${s.id}` : undefined}>
+                          {modeLabel[m]}
+                        </a>
+                      ) : (
+                        <span class="chip is-empty">{modeLabel[m]}</span>
+                      );
+                    })}
+                  </div>
+                </li>
+              ))}
+          </ol>
+        </section>
+      ))
+    }
+  </div>
+</Base>

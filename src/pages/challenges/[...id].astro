@@ -1,0 +1,83 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ChapterBar from '../../components/ChapterBar.astro';
+import CodePanel from '../../components/CodePanel.astro';
+import Quiz from '../../components/Quiz.astro';
+import Pager from '../../components/Pager.astro';
+import { getBook, url } from '../../lib/book';
+import { loadCode } from '../../lib/code';
+import { mdInline } from '../../lib/md';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('challenges');
+  return entries.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+const chapters = await getBook();
+const chapter = chapters.find((c) => c.id === d.chapter.id)!;
+const starter = await loadCode(d.starter);
+const solution = await loadCode(d.solution);
+const difficultyLabel = { 'warm-up': 'Warm-up', core: 'Core', stretch: 'Stretch' }[d.difficulty];
+---
+<Base title={d.title} description={d.abstract}>
+  <ChapterBar chapter={chapter} mode="challenge" />
+
+  <div class="wrap challenge-head">
+    <div class="badges">
+      <span class:list={['badge', `badge-${d.difficulty}`]}>{difficultyLabel}</span>
+      <span class="badge">{d.minutes} min</span>
+    </div>
+    <h1 class="page-title">{d.title}</h1>
+    <p class="page-abstract">{d.abstract}</p>
+  </div>
+
+  <div class="wrap challenge-grid">
+    <div class="challenge-brief">
+      <div class="prose"><Content /></div>
+      <div class="done-when">
+        <h2>You’re done when</h2>
+        <ul>{d.doneWhen.map((item) => <li set:html={mdInline(item)} />)}</ul>
+      </div>
+    </div>
+    <div class="challenge-code">
+      <CodePanel filename={starter.filename} html={starter.html} raw={starter.raw} label="Starter code" />
+    </div>
+  </div>
+
+  <section class="wrap section" aria-labelledby="hints-title">
+    <h2 class="section-title" id="hints-title">Stuck?</h2>
+    <p class="section-intro">Reveal one hint at a time. Try the next step on your own before opening another.</p>
+    <div class="hints" data-hints>
+      {
+        d.hints.map((h, i) => (
+          <div class="hint" data-hint>
+            <span class="hint-label">Hint {i + 1}</span>
+            <span set:html={mdInline(h)} />
+          </div>
+        ))
+      }
+      <button type="button" class="btn btn-ghost" data-hint-next hidden>Show hint 1 of {d.hints.length}</button>
+    </div>
+    <details class="solution">
+      <summary>Show the solution</summary>
+      <CodePanel filename={solution.filename} html={solution.html} raw={solution.raw} label="Solution" />
+    </details>
+    <div class="complete-row">
+      <button type="button" class="btn btn-primary" data-complete={`uitb:challenge:${entry.id}`} aria-pressed="false" hidden>Mark as completed</button>
+    </div>
+  </section>
+
+  {
+    d.quiz && (
+      <div class="wrap section">
+        <Quiz quiz={d.quiz} name={`quiz-${entry.id}`} />
+      </div>
+    )
+  }
+
+  <Pager chapters={chapters} href={url(`challenges/${entry.id}/`)} />
+</Base>

@@ -1,0 +1,16 @@
+{
+  "name": "ui-tests-book",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^5.7.0",
+    "marked": "^15.0.0",
+    "shiki": "^3.2.0"
+  }
+}

@@ -1,0 +1,34 @@
+---
+import { flatten, modeLabel, type Chapter } from '../lib/book';
+
+interface Props {
+  chapters: Chapter[];
+  href: string;
+}
+const stops = flatten(Astro.props.chapters);
+const i = stops.findIndex((s) => s.href === Astro.props.href);
+const prev = i > 0 ? stops[i - 1] : undefined;
+const next = i >= 0 && i < stops.length - 1 ? stops[i + 1] : undefined;
+---
+<nav class="wrap pager" aria-label="Previous and next page">
+  {
+    prev ? (
+      <a class="pager-link" href={prev.href}>
+        <span class="pager-dir">Previous</span>
+        <span class="pager-title">{prev.title}</span>
+        <span class="pager-meta">Chapter {prev.chapterNumber}, {modeLabel[prev.mode]}</span>
+      </a>
+    ) : (
+      <span />
+    )
+  }
+  {
+    next && (
+      <a class="pager-link is-next" href={next.href}>
+        <span class="pager-dir">Next</span>
+        <span class="pager-title">{next.title}</span>
+        <span class="pager-meta">Chapter {next.chapterNumber}, {modeLabel[next.mode]}</span>
+      </a>
+    )
+  }
+</nav>

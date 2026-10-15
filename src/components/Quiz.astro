@@ -1,0 +1,27 @@
+---
+interface Props {
+  quiz: { question: string; options: string[]; answer: number; explanation: string };
+  name: string;
+}
+const { quiz, name } = Astro.props;
+---
+<section class="quiz" data-quiz data-answer={quiz.answer}>
+  <p class="section-kicker">Check your understanding</p>
+  <fieldset>
+    <legend>{quiz.question}</legend>
+    <div class="quiz-options">
+      {
+        quiz.options.map((o, i) => (
+          <label class="quiz-option">
+            <input type="radio" name={name} value={i} />
+            <span>{o}</span>
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+  <p class="quiz-feedback" data-feedback hidden aria-live="polite">
+    <strong data-verdict></strong>
+    <span data-explanation hidden>{quiz.explanation}</span>
+  </p>
+</section>

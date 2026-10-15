@@ -1,0 +1,34 @@
+---
+import { modeLabel, modes, url, type Chapter, type Mode } from '../lib/book';
+
+interface Props {
+  chapter: Chapter;
+  mode: Mode;
+}
+const { chapter, mode } = Astro.props;
+---
+<div class="chapter-bar">
+  <div class="wrap chapter-bar-inner">
+    <nav aria-label="Breadcrumb" class="crumbs">
+      <a href={url('')}>Book</a>
+      <span aria-hidden="true">›</span>
+      <span class="here">Chapter {chapter.number}: {chapter.title}</span>
+    </nav>
+    <nav aria-label="Chapter modes" class="modes">
+      {
+        modes.map((m) => {
+          const target = chapter[m][0];
+          return target ? (
+            <a href={target.href} class:list={['mode', { 'is-current': m === mode }]} aria-current={m === mode ? 'page' : undefined}>
+              {modeLabel[m]}
+            </a>
+          ) : (
+            <span class="mode is-empty" aria-disabled="true" title="Not written yet">
+              {modeLabel[m]}
+            </span>
+          );
+        })
+      }
+    </nav>
+  </div>
+</div>

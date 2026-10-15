@@ -1,0 +1,99 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ChapterBar from '../../components/ChapterBar.astro';
+import Stepper from '../../components/Stepper.astro';
+import Quiz from '../../components/Quiz.astro';
+import Pager from '../../components/Pager.astro';
+import { getBook, url } from '../../lib/book';
+import { assertPublic, loadCode } from '../../lib/code';
+import { mdInline } from '../../lib/md';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('practice');
+  return entries.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const chapters = await getBook();
+const chapter = chapters.find((c) => c.id === d.chapter.id)!;
+
+const sections = await Promise.all(
+  d.sections.map(async (sec, si) => ({
+    anchor: `section-${si + 1}`,
+    title: sec.title,
+    introHtml: mdInline(sec.intro),
+    steps: await Promise.all(
+      sec.steps.map(async (step) => {
+        const code = await loadCode(step.code, step.highlight);
+        if (step.preview) assertPublic(step.preview.image);
+        return {
+          title: step.title,
+          textHtml: mdInline(step.text),
+          raw: code.raw,
+          codeHtml: code.html,
+          filename: step.filename ?? code.filename,
+          preview: step.preview ? { src: url(step.preview.image), alt: step.preview.alt } : undefined,
+        };
+      }),
+    ),
+  })),
+);
+---
+<Base title={d.title} description={d.abstract}>
+  <ChapterBar chapter={chapter} mode="practice" />
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-main">
+        <p class="hero-kicker">Chapter {chapter.number} · Practice</p>
+        <h1 class="hero-title">{d.title}</h1>
+        <p class="hero-lede">{d.abstract}</p>
+        <div class="hero-actions">
+          <a class="btn btn-hero" href="#section-1">Get started</a>
+          <span>{d.minutes} min</span>
+        </div>
+      </div>
+      <nav class="hero-card" aria-label="Sections">
+        <p class="hero-card-title">In this tutorial</p>
+        {
+          sections.map((s, i) => (
+            <a href={`#${s.anchor}`}>
+              <span class="num">{i + 1}</span>
+              <span>{s.title}</span>
+            </a>
+          ))
+        }
+        {
+          d.quiz && (
+            <a href="#check">
+              <span class="num">{sections.length + 1}</span>
+              <span>Check your understanding</span>
+            </a>
+          )
+        }
+      </nav>
+    </div>
+  </section>
+
+  {
+    sections.map((s, i) => (
+      <section class="wrap section" id={s.anchor} aria-labelledby={`${s.anchor}-title`}>
+        <p class="section-kicker">Section {i + 1}</p>
+        <h2 class="section-title" id={`${s.anchor}-title`}>{s.title}</h2>
+        <p class="section-intro" set:html={s.introHtml} />
+        <Stepper steps={s.steps} />
+      </section>
+    ))
+  }
+
+  {
+    d.quiz && (
+      <div class="wrap section" id="check">
+        <Quiz quiz={d.quiz} name={`quiz-${entry.id}`} />
+      </div>
+    )
+  }
+
+  <Pager chapters={chapters} href={url(`practice/${entry.id}/`)} />
+</Base>
