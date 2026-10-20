@@ -1,0 +1,52 @@
+chapter: 02-uikit-introduction
+title: Run the Starter Project
+abstract: Open TaskBoard, find where it starts and what data it holds, run it on a simulator, and make your first change show up in the console.
+minutes: 15
+order: 1
+
+sections:
+  - title: Find your way around
+    intro: Before you run anything, you open the three files that explain what the app does on launch.
+    steps:
+      - title: Open SceneDelegate.swift
+        text: "Open the starter project and select **SceneDelegate.swift** in the project navigator. These lines create the window and put the Login screen in it."
+        code: 02-uikit-introduction/SceneDelegate-01.swift
+        filename: SceneDelegate.swift
+        highlight: ["10-13"]
+      - title: Find the Login screen
+        text: Open **LoginViewController.swift**. It only sets a background colour and a title — you build the rest during this chapter.
+        code: 02-uikit-introduction/LoginViewController-starter.swift
+        filename: LoginViewController.swift
+        highlight: ["4-8"]
+      - title: Find the sample data
+        text: "Open **TaskStore.swift**. The three tasks live here, in memory, so every launch starts from exactly the same data — useful for repeatable tests."
+        code: 02-uikit-introduction/TaskStore.swift
+        filename: TaskStore.swift
+        highlight: ["15-19"]
+
+  - title: Run it and read the console
+    intro: You launch the app, then make a change that proves your code is the code that runs.
+    steps:
+      - title: Pick a simulator and run
+        text: "In the run destination menu, choose an iPhone simulator. Press ▶. You should see an empty screen titled *Log in*."
+        code: 02-uikit-introduction/SceneDelegate-01.swift
+        filename: SceneDelegate.swift
+      - title: Print on launch
+        text: "Add a `print` at the end of the function and run again. Open the console with ⇧⌘Y and find your line among the system messages."
+        code: 02-uikit-introduction/SceneDelegate-02.swift
+        filename: SceneDelegate.swift
+        highlight: [15]
+      - title: Switch destinations
+        text: Pick a different iPhone in the run destination menu and run once more. A second simulator boots; the app and your console line are the same.
+        code: 02-uikit-introduction/SceneDelegate-02.swift
+        filename: SceneDelegate.swift
+        highlight: [15]
+
+quiz:
+  question: You press Run and the app does not launch. The Issue navigator shows a red error. What happened?
+  options:
+    - The simulator crashed
+    - The build failed, so the app was never launched
+    - The app launched but has no screens
+  answer: 1
+  explanation: Run builds first, and a build error stops everything — the same rule as in chapter 1, where an error meant nothing ran.

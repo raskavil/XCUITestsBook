@@ -1,47 +1,58 @@
 # The book's table of contents. Every page in every mode points at one of these ids.
 # part: 1 = Foundations, 2 = Writing Robust Tests, 3 = At Scale (names live in src/lib/book.ts)
-- id: 01-why-ui-tests
+# Chapters 1 and 2 are split into lessons: one Read, Practice and Challenge page per lesson, ordered with `order`.
+- id: 01-swift-introduction
   number: 1
+  title: Swift Introduction
+  part: 1
+  summary: Read a 30-line Swift file and write small functions in a playground — the Swift a UI tester needs.
+- id: 02-uikit-introduction
+  number: 2
+  title: UIKit Introduction
+  part: 1
+  summary: Build the TaskBoard screens in code and point at any element to say how a test will find it.
+- id: 03-why-ui-tests
+  number: 3
   title: Why UI Tests
   part: 1
   summary: What UI tests catch that unit tests can’t, and what they cost you.
-- id: 02-first-xcuitest
-  number: 2
+- id: 04-first-xcuitest
+  number: 4
   title: Your First XCUITest
   part: 1
   summary: Add a UI test target, launch the app and make your first assertion.
-- id: 03-querying-elements
-  number: 3
+- id: 05-querying-elements
+  number: 5
   title: Querying Elements
   part: 1
   summary: Find buttons, fields and cells with queries that don’t break on the next redesign.
-- id: 04-accessibility-identifiers
-  number: 4
+- id: 06-accessibility-identifiers
+  number: 6
   title: Accessibility Identifiers
   part: 2
   summary: Give every testable control a stable name, without changing what VoiceOver says.
-- id: 05-waiting
-  number: 5
+- id: 07-waiting
+  number: 7
   title: Waiting for Elements
   part: 2
   summary: Replace sleeps with expectations so tests wait exactly as long as the app needs.
-- id: 06-page-object
-  number: 6
+- id: 08-page-object
+  number: 8
   title: The Page Object Pattern
   part: 2
   summary: Wrap each screen in a small Swift type so tests read like user stories.
-- id: 07-launch-arguments
-  number: 7
+- id: 09-launch-arguments
+  number: 9
   title: Launch Arguments
   part: 2
   summary: Start the app in a known state — logged in, empty, offline — from the test.
-- id: 08-running-in-ci
-  number: 8
+- id: 10-running-in-ci
+  number: 10
   title: Running in CI
   part: 3
   summary: Run UI tests on every pull request, in parallel, with useful failure output.
-- id: 09-flaky-tests
-  number: 9
+- id: 11-flaky-tests
+  number: 11
   title: Hunting Flaky Tests
   part: 3
   summary: Find out why a test fails one run in twenty, and fix the cause.

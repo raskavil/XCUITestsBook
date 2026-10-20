@@ -1,0 +1,53 @@
+chapter: 01-swift-introduction
+title: Write Your First Functions
+abstract: Build a greeting function step by step — no input, one input, a result — then write an email check and run it over a list.
+minutes: 20
+order: 6
+
+sections:
+  - title: From steps to a function
+    intro: You package a step under a name, then give it an input and an output.
+    steps:
+      - title: Define and call a function
+        text: Create a playground called **Functions**. Define `greet()` and call it twice. Comment out both calls and run — nothing prints, because defining is not calling.
+        code: 01-swift-introduction/Functions-01.swift
+        filename: Contents.swift
+        highlight: ["1-6"]
+      - title: Add a parameter
+        text: "Give `greet` a `name` parameter of type `String`, and pass a different name in each call."
+        code: 01-swift-introduction/Functions-02.swift
+        filename: Contents.swift
+        highlight: ["1-2", "5-6"]
+      - title: Return a value
+        text: "Rename it to `greeting(for:)` and make it return the text instead of printing it. The caller decides what to do with the result."
+        code: 01-swift-introduction/Functions-03.swift
+        filename: Contents.swift
+        highlight: ["1-2", "5-6"]
+
+  - title: Write a check function
+    intro: "A function that returns a `Bool` is a reusable check, like the ones a UI test will make later."
+    steps:
+      - title: Write isValidEmail
+        text: "Add `isValidEmail(_:)`. The `_` drops the label, so calls read naturally. Call it with three inputs and predict each result before you run."
+        code: 01-swift-introduction/Functions-04.swift
+        filename: Contents.swift
+        highlight: ["5-11"]
+      - title: Reject empty and spaced input
+        text: "Return `false` early for empty text or text with a space. `return` ends the function, so the last line only runs for the remaining cases."
+        code: 01-swift-introduction/Functions-05.swift
+        filename: Contents.swift
+        highlight: ["6-8", 15]
+      - title: Run it over a list
+        text: Replace the four calls with an array and a loop. The check is written once and used for every input.
+        code: 01-swift-introduction/Functions-06.swift
+        filename: Contents.swift
+        highlight: ["12-16"]
+
+quiz:
+  question: Why write a function instead of copying the same lines into several places?
+  options:
+    - Functions run faster than copied lines
+    - A change to the steps is made once, and every caller gets it
+    - Swift does not allow the same line twice in one file
+  answer: 1
+  explanation: A function gives the steps one home. Fix or change it there, and every test that calls it follows.

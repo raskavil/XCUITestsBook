@@ -1,0 +1,53 @@
+chapter: 01-swift-introduction
+title: Model Test Users and Screens
+abstract: Define a TestUser struct with a Role enum, loop over a list of users, then describe the TaskBoard screens with an enum of your own.
+minutes: 20
+order: 8
+
+sections:
+  - title: Build a TestUser type
+    intro: A struct keeps a user’s values together; an enum limits the role to the choices that exist.
+    steps:
+      - title: Define the struct
+        text: Create a playground called **Models**. Define `TestUser` with a name and an email, create one user and print both properties with a dot.
+        code: 01-swift-introduction/Models-01.swift
+        filename: Contents.swift
+        highlight: ["1-8"]
+      - title: Add a Role enum
+        text: "Define `Role` with three cases and add a `role` property. Notice the short `.user` — Swift knows the type, so the enum’s name is not needed. Try `.admn` and read the error."
+        code: 01-swift-introduction/Models-02.swift
+        filename: Contents.swift
+        highlight: ["1-3", 8, "11-14"]
+      - title: Loop over the users
+        text: "Put three users in an array and print only the admins. The `if` compares two enum cases with `==`."
+        code: 01-swift-introduction/Models-03.swift
+        filename: Contents.swift
+        highlight: ["11-21"]
+
+  - title: Describe the screens
+    intro: An enum lists the app’s screens, and raw values attach the title a test expects on each one.
+    steps:
+      - title: List the screens
+        text: In a new page, define `Screen` with one case per TaskBoard screen. Print a case and see its name in the console.
+        code: 01-swift-introduction/Screen-01.swift
+        filename: Contents.swift
+        highlight: ["1-6"]
+      - title: Attach the expected titles
+        text: "Add `: String` after the name and give each case a raw value — the title shown on that screen. `rawValue` reads it back."
+        code: 01-swift-introduction/Screen-02.swift
+        filename: Contents.swift
+        highlight: ["1-5", "8-9"]
+      - title: Combine both in a struct
+        text: "Add a `Visit` struct that records a screen and how long the tester stayed. Store it in a `var` and change `seconds`. Then change `var visit` to `let` and read the error."
+        code: 01-swift-introduction/Screen-03.swift
+        filename: Contents.swift
+        highlight: ["11-18"]
+
+quiz:
+  question: When should you group values in a struct?
+  options:
+    - When they belong together and describe one thing, such as a user’s name, email and role
+    - Whenever you have more than three constants in a file
+    - Only when the values all have the same type
+  answer: 0
+  explanation: A struct describes one thing made of several values. The values can have different types — that is usually the point.

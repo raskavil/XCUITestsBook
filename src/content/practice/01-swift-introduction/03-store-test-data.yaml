@@ -1,0 +1,49 @@
+chapter: 01-swift-introduction
+title: Store Test Data
+abstract: Keep a test account in constants, give each value a type, count failed attempts in a variable and print readable messages.
+minutes: 15
+order: 3
+
+sections:
+  - title: Name the test account
+    intro: Constants give your test data one home, so a change to the account is a change to one line.
+    steps:
+      - title: Add two constants
+        text: Create a playground called **TestData**. Store the username and password with `let`, then print both.
+        code: 01-swift-introduction/Values-01.swift
+        filename: Contents.swift
+        highlight: ["2-3"]
+      - title: Write the types out
+        text: Add a type after each name, and three more values of type `Int`, `Double` and `Bool`. Option-click `age` to confirm what Swift sees.
+        code: 01-swift-introduction/Values-02.swift
+        filename: Contents.swift
+        highlight: ["2-6"]
+      - title: Count with a variable
+        text: Add `failedAttempts` with `var`, add one to it, and print it instead of the password. Try changing `var` to `let` and read the error, then change it back.
+        code: 01-swift-introduction/Values-03.swift
+        filename: Contents.swift
+        highlight: ["7-8", 11]
+
+  - title: Build messages from the data
+    intro: String interpolation puts values inside text, which is how you build the texts a test expects to see.
+    steps:
+      - title: Interpolate the username
+        text: "Replace both `print` lines with messages that use `\\(…)`. The console now reads like a log, not a list of raw values."
+        code: 01-swift-introduction/Values-04.swift
+        filename: Contents.swift
+        highlight: ["10-11"]
+      - title: Mix several types
+        text: "Print one line that uses `username`, `age`, `rating` and `isAdmin`. Interpolation works with every type, so nothing needs converting."
+        code: 01-swift-introduction/Values-05.swift
+        filename: Contents.swift
+        highlight: [12]
+
+quiz:
+  question: Which type does Swift infer for `let timeout = 3.14`?
+  options:
+    - String
+    - Int
+    - Double
+    - Bool
+  answer: 2
+  explanation: A number with a decimal point is a `Double`. Without the decimal point, `3` would be an `Int`, and with quotes, `"3.14"` would be a `String`.

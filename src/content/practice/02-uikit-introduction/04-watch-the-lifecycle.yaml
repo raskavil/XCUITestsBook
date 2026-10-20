@@ -1,0 +1,53 @@
+chapter: 02-uikit-introduction
+title: Watch the Lifecycle
+abstract: Print from two lifecycle moments, prove that a loaded screen is not yet visible, then read a full view controller line by line.
+minutes: 15
+order: 4
+
+sections:
+  - title: Print the two moments
+    intro: You make the Login screen report when it loads and when it appears, and compare the two.
+    steps:
+      - title: Print in viewDidLoad
+        text: "Start from the starter’s **LoginViewController.swift** and add a `print` at the end of `viewDidLoad`. Run and find the line in the console."
+        code: 02-uikit-introduction/Lifecycle-01.swift
+        filename: LoginViewController.swift
+        highlight: [8]
+      - title: Override viewDidAppear
+        text: "Type `viewDidAppear` inside the class and accept Xcode’s completion — it adds `override` for you. Keep the `super` call, then print. Run and read the order."
+        code: 02-uikit-introduction/Lifecycle-02.swift
+        filename: LoginViewController.swift
+        highlight: ["11-14"]
+      - title: Ask whether the screen is on screen
+        text: "A view that is on screen belongs to a window. Print `view.window != nil` in both functions. It is `false` in `viewDidLoad` and `true` in `viewDidAppear`."
+        code: 02-uikit-introduction/Lifecycle-03.swift
+        filename: LoginViewController.swift
+        highlight: [8, 13]
+
+  - title: Read a whole view controller
+    intro: The starter’s Task detail screen uses everything from this lesson. You read it with chapter 1’s passes.
+    steps:
+      - title: Read the class line
+        text: "Open **TaskDetailViewController.swift**. Line 3 says: a task detail screen that is a kind of `UIViewController`, and nothing builds on top of it."
+        code: 02-uikit-introduction/TaskDetailViewController-01.swift
+        filename: TaskDetailViewController.swift
+        highlight: [3]
+      - title: Skip the initialisers
+        text: "The two `init`s let the screen receive a task when it is created. The second one exists only because UIKit requires it. Note them and move on."
+        code: 02-uikit-introduction/TaskDetailViewController-01.swift
+        filename: TaskDetailViewController.swift
+        highlight: ["8-15"]
+      - title: Find where the screen is built
+        text: "Everything the user sees is created in `viewDidLoad`, right after the `super` call: texts, fonts, the stack. This is where identifiers will go in lesson 2.7."
+        code: 02-uikit-introduction/TaskDetailViewController-01.swift
+        filename: TaskDetailViewController.swift
+        highlight: ["17-25"]
+
+quiz:
+  question: A test taps a button as soon as the screen’s views exist. Why can that be too early?
+  options:
+    - Buttons cannot be tapped until the app is restarted
+    - "The views exist after `viewDidLoad`, but the screen may still be animating in until `viewDidAppear`"
+    - "`viewDidLoad` removes all buttons"
+  answer: 1
+  explanation: "\"Loaded\" means the view tree exists, not that the user can see and use it. Until the screen has appeared, a tap can miss or hit the previous screen."

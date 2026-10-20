@@ -1,0 +1,58 @@
+chapter: 01-swift-introduction
+title: Fix Five Broken Snippets
+abstract: Paste a playground with five mistakes in it, then fix them one at a time by reading each error message first.
+minutes: 15
+order: 2
+
+sections:
+  - title: Read before you fix
+    intro: Before you change anything, you look at what the compiler reports and decide where to start.
+    steps:
+      - title: Paste the broken playground
+        text: Create a playground called **Errors** and paste this code. It contains exactly five mistakes, one per snippet. Run it and count the red markers.
+        code: 01-swift-introduction/Errors-01.swift
+        filename: Contents.swift
+        highlight: [3, "6-7", 10, 13, "16-17"]
+      - title: Find the first error in the file
+        text: Ignore the order the errors appear in the sidebar. Scroll to the top and find the error with the smallest line number. That is line 3.
+        code: 01-swift-introduction/Errors-01.swift
+        filename: Contents.swift
+        highlight: [3]
+
+  - title: Fix one error, run, repeat
+    intro: "Each step fixes one error. After each fix, run again and check that the error count dropped."
+    steps:
+      - title: Fix the typo
+        text: "The message is *Cannot find 'usernme' in scope*. The name on line 2 is `username`, so correct the spelling on line 3."
+        code: 01-swift-introduction/Errors-02.swift
+        filename: Contents.swift
+        highlight: [3]
+      - title: Close the brace
+        text: "The *Expected '}'* error points at the end of the file, but the `{` on line 6 is never closed. Add `}` on its own line after the `print`. Watch several errors vanish at once."
+        code: 01-swift-introduction/Errors-03.swift
+        filename: Contents.swift
+        highlight: [8]
+      - title: End the text
+        text: "*Unterminated string literal* means a quote was opened and never closed. Add the missing `\"` before the closing parenthesis."
+        code: 01-swift-introduction/Errors-04.swift
+        filename: Contents.swift
+        highlight: [11]
+      - title: Use the right type
+        text: "*Cannot convert value of type 'String' to specified type 'Int'.* The quotes make `\"3\"` text, not a number. Remove them."
+        code: 01-swift-introduction/Errors-05.swift
+        filename: Contents.swift
+        highlight: [14]
+      - title: Make the value changeable
+        text: "*Cannot assign to value: 'screen' is a 'let' constant.* The fix-it offers to change `let` to `var`. Here it is right — accept it, then run the playground with zero errors."
+        code: 01-swift-introduction/Errors-06.swift
+        filename: Contents.swift
+        highlight: [17]
+
+quiz:
+  question: Why can one missing `}` produce ten errors?
+  options:
+    - The compiler stops reading after the first error
+    - Without the `}`, the compiler misreads where the block ends, so every line after it looks wrong
+    - Each missing bracket is counted once per line in the file
+  answer: 1
+  explanation: The compiler cannot tell where the block was meant to end, so the lines that follow are read in the wrong context. Fix the first error in the file, run again, and many of the others disappear.

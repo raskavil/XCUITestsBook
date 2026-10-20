@@ -1,0 +1,57 @@
+chapter: 01-swift-introduction
+title: "Project: Build a Test Data Generator"
+abstract: Put chapter 1 together in one playground that generates test users, checks their emails and prints a small test report.
+minutes: 30
+order: 10
+
+sections:
+  - title: Model and generate users
+    intro: The generator starts with the two types from lesson 1.8 and a function that builds a user from a name.
+    steps:
+      - title: Define the types
+        text: Create a playground called **TestDataGenerator** and define `Role` and `TestUser`, as in lesson 1.8.
+        code: 01-swift-introduction/Generator-01.swift
+        filename: Contents.swift
+        highlight: ["1-9"]
+      - title: Write the generator function
+        text: "`makeUser(_:role:)` builds the email from the name with interpolation, so every generated user gets a matching address."
+        code: 01-swift-introduction/Generator-02.swift
+        filename: Contents.swift
+        highlight: ["11-13"]
+      - title: Generate the list
+        text: "Start from an empty `var` array. Generate four regular users in a loop, add two admins, then two hand-written guests with broken emails. Print the count — it should be 8."
+        code: 01-swift-introduction/Generator-03.swift
+        filename: Contents.swift
+        highlight: ["15-24"]
+
+  - title: Check every email
+    intro: The email check from lesson 1.6 runs over every generated user and collects the ones that fail.
+    steps:
+      - title: Collect the invalid emails
+        text: "Add `isValidEmail(_:)` above the list. Loop over the users and append each failing email to `invalid`. `joined(separator:)` turns the array into one line of text for the report."
+        code: 01-swift-introduction/Generator-04.swift
+        filename: Contents.swift
+        highlight: ["15-20", "31-36", "39-40"]
+
+  - title: Print the test report
+    intro: The last line of the report counts users by role, using the comparisons from lesson 1.4.
+    steps:
+      - title: Count users by role
+        text: "Add three counters and an `if` / `else if` chain inside the same loop. Run it and compare your console with the report below line 51 — every number must match."
+        code: 01-swift-introduction/Generator-05.swift
+        filename: Contents.swift
+        highlight: ["32-34", "39-45", 51]
+      - title: Change the data, not the code
+        text: "Add one more admin with `makeUser`. Run again: the user count, the valid count and the admin count all change, and you did not touch the report. That is the point of a generator."
+        code: 01-swift-introduction/Generator-05.swift
+        filename: Contents.swift
+        highlight: ["26-29"]
+
+quiz:
+  question: "The report prints `Valid emails: 6`. Where does the 6 come from?"
+  options:
+    - It is typed into the `print` line
+    - "`users.count - invalid.count`, computed when the playground runs"
+    - The number of users created with `makeUser`
+  answer: 1
+  explanation: "Every number in the report is computed from the data. Add or remove a user and the report stays correct without any edit."
