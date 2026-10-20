@@ -1,0 +1,62 @@
+chapter: 02-uikit-introduction
+title: "Project: Build the TaskBoard Login"
+abstract: Starting from a fresh starter project, build the Login screen, log in with the test account and add the identifier contract to all three screens.
+minutes: 45
+order: 9
+
+sections:
+  - title: Build the Login screen
+    intro: "Open a fresh copy of the starter project. You rebuild lesson 2.6’s screen in one go, then name its controls."
+    steps:
+      - title: Build the form
+        text: "Declare the four controls, configure them, put them in a vertical stack and pin it to the safe area. Run and compare with lesson 2.6."
+        code: 02-uikit-introduction/Login-03.swift
+        filename: LoginViewController.swift
+        highlight: ["4-7", "14-31"]
+      - title: Add the Login identifiers
+        text: "Set the four identifiers from the contract and connect the button to `logIn()`. For now, `logIn()` is lesson 2.6’s placeholder."
+        code: 02-uikit-introduction/Login-05.swift
+        filename: LoginViewController.swift
+        highlight: ["22-25", 38, "41-44"]
+
+  - title: Log in for real
+    intro: "The button now checks the test account: one success path and two error texts."
+    steps:
+      - title: Check the account
+        text: "Read both fields. An empty username shows *Enter your username.* The test account clears the error and pushes the task list. Anything else shows *Wrong username or password.*"
+        code: 02-uikit-introduction/LoginProject-01.swift
+        filename: LoginViewController.swift
+        highlight: ["41-53"]
+      - title: Try all three paths
+        text: "Run three times: tap **Log in** with empty fields, with `tester` and a wrong password, then with `tester` / `password123`. Only the last one reaches the task list."
+        code: 02-uikit-introduction/LoginProject-01.swift
+        filename: LoginViewController.swift
+        highlight: [45, 47, 50]
+
+  - title: Complete the identifier contract
+    intro: The two screens from the starter get their identifiers, so every required row of the contract is in place.
+    steps:
+      - title: Name the table and its cells
+        text: "In **TaskListViewController.swift**, name the table and give each cell the task’s id as its suffix — not the row number."
+        code: 02-uikit-introduction/TaskListViewController-03.swift
+        filename: TaskListViewController.swift
+        highlight: [9, 29]
+      - title: Name the detail labels
+        text: "In **TaskDetailViewController.swift**, name the title and notes labels right below where they are configured."
+        code: 02-uikit-introduction/TaskDetailViewController-02.swift
+        filename: TaskDetailViewController.swift
+        highlight: ["26-27"]
+      - title: Check every identifier
+        text: "Log in, open task 2 and use the Accessibility Inspector on all three screens. Tick off each required row of the contract — nine identifiers, plus one cell per task."
+        code: 02-uikit-introduction/TaskDetailViewController-02.swift
+        filename: TaskDetailViewController.swift
+        highlight: ["26-27"]
+
+quiz:
+  question: "A test opens “the cell for task 3” after another test deleted task 1. Which identifier finds it reliably?"
+  options:
+    - "`taskList.cell.2`, because it is now the second row"
+    - "`taskList.cell.3`, because the suffix is the task id"
+    - "`taskList.cell`, because all cells share it"
+  answer: 1
+  explanation: The suffix comes from the task’s id, which never changes. Row numbers shift as soon as a task is added, deleted or re-sorted.

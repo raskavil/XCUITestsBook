@@ -1,0 +1,53 @@
+chapter: 02-uikit-introduction
+title: Build a Controls Sampler
+abstract: Put a label, two kinds of text field, a button, a switch and an image on the Login screen, then find the sixth control in the task list.
+minutes: 20
+order: 3
+
+sections:
+  - title: Add the controls one by one
+    intro: "A vertical stack view lines the controls up for you. Lesson 2.6 explains it; for now, add each new control to the `arrangedSubviews` list."
+    steps:
+      - title: Start with a label
+        text: "Replace the starter’s Login screen with a label inside a stack. The stack gets a fixed frame for now. Run: one line of text."
+        code: 02-uikit-introduction/Controls-01.swift
+        filename: LoginViewController.swift
+        highlight: ["9-16"]
+      - title: Add two text fields
+        text: "Add a username field and a password field. They are the same type; `isSecureTextEntry` turns the second into a password field. Type into both in the simulator."
+        code: 02-uikit-introduction/Controls-02.swift
+        filename: LoginViewController.swift
+        highlight: ["12-19", 21]
+      - title: Add a button and a switch
+        text: "A `.system` button gets its text from `setTitle(_:for:)`. A switch starts on when `isOn` is `true`. Tap both — they react, but do nothing yet."
+        code: 02-uikit-introduction/Controls-03.swift
+        filename: LoginViewController.swift
+        highlight: ["21-25", 27]
+      - title: Add an image
+        text: "`UIImage(systemName:)` loads one of Apple’s built-in SF Symbols. Put the logo first in the stack so it sits on top."
+        code: 02-uikit-introduction/Controls-04.swift
+        filename: LoginViewController.swift
+        highlight: ["27-28", 30]
+
+  - title: Name what you see
+    intro: Now you practise the habit from the lesson — calling every control by the type a test will look for.
+    steps:
+      - title: Find the sixth control
+        text: "Open **TaskListViewController.swift**. It is a `UITableViewController`: a screen that is one big `UITableView`. Each task becomes a cell in `cellForRowAt`."
+        code: 02-uikit-introduction/TaskListViewController-01.swift
+        filename: TaskListViewController.swift
+        highlight: [3, "21-29"]
+      - title: Label every control
+        text: "Back on the running Login screen, write a comment above each control in your code with its test query from the lesson’s table — for example `// app.secureTextFields` above the password field."
+        code: 02-uikit-introduction/Controls-04.swift
+        filename: LoginViewController.swift
+        highlight: ["9-28"]
+
+quiz:
+  question: Which query finds a password field?
+  options:
+    - "`app.textFields[…]`"
+    - "`app.secureTextFields[…]`"
+    - "`app.passwordFields[…]`"
+  answer: 1
+  explanation: A text field with `isSecureTextEntry = true` is a secure text field to the test framework, and it is only found by `secureTextFields`.

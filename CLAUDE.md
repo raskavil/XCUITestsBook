@@ -6,12 +6,15 @@ You write **content only**: Markdown, YAML and Swift files. Do not edit `src/com
 
 ## Audience and voice
 
-- Readers are iOS engineers who know Swift and UIKit/SwiftUI but are new to UI testing.
+- Readers are iOS engineers who know Swift and UIKit/SwiftUI but are new to UI testing. Chapters 1 (Swift) and 2
+  (UIKit) are the exception: they teach QA readers who have never written code, and add a "QA view" section per lesson.
 - Write in English, second person ("you"), active voice, plain verbs. Explain *why* before *how*.
 - Sentence case for every title and heading. No exclamation marks, no filler ("simply", "just", "easy").
 - Prefer one short, concrete example over a long abstract explanation.
-- Use the sample app consistently: login screen → dashboard, plus a Settings tab. Invent new screens when needed and
-  reuse them across chapters.
+- Use the sample app consistently: **TaskBoard** — Login → Task list → Task detail, with Add task as a modal, built in
+  chapter 2. Its accessibility identifiers are fixed by the contract in
+  `src/content/reading/02-uikit-introduction/09-project-taskboard.md`; reuse them exactly. Invent new screens when
+  needed and reuse them across chapters.
 - **Never use code, names or details from real proprietary or internal projects.** Everything is generic and invented.
 
 ## Repository map
@@ -25,6 +28,10 @@ You write **content only**: Markdown, YAML and Swift files. Do not edit `src/com
 | Swift snapshots | `code/<chapter-id>/<File>-NN.swift` |
 | Optional screenshots | `public/previews/<chapter-id>/…png` |
 | Schemas (source of truth) | `src/content.config.ts` |
+
+Chapters split into lessons (chapters 1 and 2) keep one subfolder per chapter in every mode, for example
+`src/content/reading/01-swift-introduction/03-storing-values.md`. Each lesson has one page per mode with the same
+`order`, and the pager walks the chapter lesson by lesson: Read → Practice → Challenge for order 1, then order 2.
 
 **Golden examples — read these before writing a new chapter and match their shape, depth and tone:**
 

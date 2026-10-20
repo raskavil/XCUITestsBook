@@ -1,0 +1,48 @@
+chapter: 02-uikit-introduction
+title: Push and Present Screens
+abstract: Push from Login to the task list and back, then present an Add task screen as a modal and give it a Cancel button.
+minutes: 20
+order: 5
+
+sections:
+  - title: Push a screen
+    intro: The Login screen is already inside a navigation controller, so it can push the task list on top of itself.
+    steps:
+      - title: Add a button that pushes
+        text: "Replace the starter’s Login screen with one button. `addAction` runs the closure when the button is tapped (lesson 2.6 explains it); the closure calls `showTasks()`, which pushes the list."
+        code: 02-uikit-introduction/NavLogin-01.swift
+        filename: LoginViewController.swift
+        highlight: [4, "11-14", "17-19"]
+      - title: Go forward and back
+        text: "Run, tap **Show tasks**, open a task, then go back twice — once with **Back**, once by swiping from the left edge. Every push has a matching pop, and you wrote none of the back code."
+        code: 02-uikit-introduction/NavLogin-01.swift
+        filename: LoginViewController.swift
+        highlight: [18]
+
+  - title: Present a modal
+    intro: Adding a task is a separate job, so it slides up as a modal — and a modal needs its own way out.
+    steps:
+      - title: Create the Add task screen
+        text: "Add **AddTaskViewController.swift** to the app. For now it only has a title; you build the form in the chapter project."
+        code: 02-uikit-introduction/AddTask-01.swift
+        filename: AddTaskViewController.swift
+        highlight: ["3-9"]
+      - title: Present it from the list
+        text: "In the task list, add a **+** button to the navigation bar. It wraps the new screen in a navigation controller and presents it. Run and tap **+**: a sheet slides up."
+        code: 02-uikit-introduction/TaskListViewController-02.swift
+        filename: TaskListViewController.swift
+        highlight: ["10-13", "40-43"]
+      - title: Give the modal a way out
+        text: "The sheet has no back button — try to find one. Add a **Cancel** button on the left that calls `dismiss(animated:)`. Now there is a visible way out, and a test can tap it."
+        code: 02-uikit-introduction/AddTask-02.swift
+        filename: AddTaskViewController.swift
+        highlight: ["9-12"]
+
+quiz:
+  question: Why does a modal screen need its own close button?
+  options:
+    - Modal screens cannot have a navigation bar
+    - A modal is not pushed, so there is no back button — without Cancel or Done the user and the test can get stuck
+    - Apple rejects apps whose modals have no button
+  answer: 1
+  explanation: A back button only exists for pushed screens. A modal provides its own way out, and a test needs a reliable button to tap rather than a swipe.

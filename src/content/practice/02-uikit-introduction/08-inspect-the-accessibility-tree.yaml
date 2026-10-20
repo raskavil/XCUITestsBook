@@ -1,0 +1,52 @@
+chapter: 02-uikit-introduction
+title: Inspect the Accessibility Tree
+abstract: Compare the Login screen in Debug View Hierarchy and the Accessibility Inspector, then fix a logo that tests cannot see despite its identifier.
+minutes: 20
+order: 8
+
+sections:
+  - title: Compare the two trees
+    intro: You look at the same screen through the developer’s tool and through the test’s eyes.
+    steps:
+      - title: Open the view tree
+        text: "Run the Login screen from lesson 2.7 and open **Debug View Hierarchy**. Count the views in the sidebar: the window, the root view, the stack, the four controls and several internal views."
+        code: 02-uikit-introduction/Login-05.swift
+        filename: LoginViewController.swift
+      - title: Open the Accessibility Inspector
+        text: "Choose **Xcode › Open Developer Tool › Accessibility Inspector**, select the simulator as its target and click the crosshair. Hover each control and read its label, identifier and traits."
+        code: 02-uikit-introduction/Login-05.swift
+        filename: LoginViewController.swift
+        highlight: ["22-25"]
+      - title: Find what disappeared
+        text: "Try to hover the stack itself, or the gap between two fields. Nothing is highlighted: the stack is a layout helper, not an element. Its children are listed directly."
+        code: 02-uikit-introduction/Login-05.swift
+        filename: LoginViewController.swift
+        highlight: [27]
+
+  - title: An element tests cannot see
+    intro: An image with an identifier looks testable in the code — the inspector says otherwise.
+    steps:
+      - title: Add a logo with an identifier
+        text: "Add a `UIImageView` showing an SF Symbol, give it the identifier `login.logo`, and put it first in the stack. Run: the logo appears above the fields."
+        code: 02-uikit-introduction/Login-06.swift
+        filename: LoginViewController.swift
+        highlight: [8, 22, 28, 30]
+      - title: Look for it in the inspector
+        text: "Hover the logo with the inspector. Nothing is found. An image view is not an accessibility element by default, so its identifier never reaches the accessibility tree."
+        code: 02-uikit-introduction/Login-06.swift
+        filename: LoginViewController.swift
+        highlight: [28]
+      - title: Make it an element
+        text: "Set `isAccessibilityElement` to `true` and give it a label a VoiceOver user would understand. Run and hover again: the logo appears with its label, identifier and the Image trait."
+        code: 02-uikit-introduction/Login-07.swift
+        filename: LoginViewController.swift
+        highlight: ["29-30"]
+
+quiz:
+  question: What does a UI test see when it looks at a screen?
+  options:
+    - The full view tree, exactly as Debug View Hierarchy shows it
+    - The accessibility tree, which leaves out layout containers and decorative views
+    - Only the views that have an accessibility identifier
+  answer: 1
+  explanation: "Tests read the accessibility tree — the same one VoiceOver uses. The Accessibility Inspector shows it, which makes it the tester’s view of the app."

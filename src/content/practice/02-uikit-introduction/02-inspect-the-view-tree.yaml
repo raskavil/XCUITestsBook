@@ -1,0 +1,47 @@
+chapter: 02-uikit-introduction
+title: Inspect the View Tree
+abstract: Add a card and a label to the Login screen, find them in Debug View Hierarchy, then make the label vanish in two different ways.
+minutes: 15
+order: 2
+
+sections:
+  - title: Build a small tree
+    intro: "You add a parent view and a child inside it to the starter’s Login screen. You replace this code in lesson 2.6, so experiment freely."
+    steps:
+      - title: Add a card
+        text: "Create a grey card with a fixed frame and add it to the screen’s root view with `addSubview`. Run: a grey rectangle appears."
+        code: 02-uikit-introduction/LoginTree-01.swift
+        filename: LoginViewController.swift
+        highlight: ["9-11"]
+      - title: Put a label inside it
+        text: "Create a label and add it to the **card**, not to `view`. Its frame is measured from the card’s corner. Change the card’s `x` and watch the label follow."
+        code: 02-uikit-introduction/LoginTree-02.swift
+        filename: LoginViewController.swift
+        highlight: ["13-15"]
+
+  - title: Look at it from the inside
+    intro: Debug View Hierarchy shows the real tree, including views nobody can see.
+    steps:
+      - title: Open Debug View Hierarchy
+        text: "With the app running, click **Debug View Hierarchy** in the debug bar. Rotate the 3D view and find the window, the root view, the card and the label in the sidebar tree."
+        code: 02-uikit-introduction/LoginTree-02.swift
+        filename: LoginViewController.swift
+      - title: Hide the parent
+        text: "Set `card.isHidden = true` and run. The label disappears too, even though nothing touched it. In the inspector, the label itself is not hidden — its parent is."
+        code: 02-uikit-introduction/LoginTree-03.swift
+        filename: LoginViewController.swift
+        highlight: [17]
+      - title: Shrink the child to nothing
+        text: "Remove the hiding line and set the label’s width to `0`. The text is gone again — but Debug View Hierarchy still lists the label. It exists; it just has no size."
+        code: 02-uikit-introduction/LoginTree-04.swift
+        filename: LoginViewController.swift
+        highlight: [13]
+
+quiz:
+  question: A label is not hidden and has text, but it does not appear on screen. Where do you look first?
+  options:
+    - At the label’s font
+    - At its parents — hidden, clipped or off screen — and at its own frame size
+    - At the app’s window
+  answer: 1
+  explanation: A parent’s `isHidden`, `alpha` and clipping apply to every child, and a zero-size frame hides a view that still exists. Debug View Hierarchy shows all of it.

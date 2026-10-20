@@ -1,0 +1,57 @@
+chapter: 02-uikit-introduction
+title: Build the Login Screen
+abstract: Build TaskBoard’s Login screen in code — two fields, a button and a label in one pinned stack — and make the button change the label.
+minutes: 25
+order: 6
+
+sections:
+  - title: Create and configure the controls
+    intro: "You start again from the starter’s empty **LoginViewController.swift** and declare everything the screen needs."
+    steps:
+      - title: Declare the controls
+        text: "Add the four controls as `private let` properties. Run: the screen is still empty, because nothing has been added to the view tree yet."
+        code: 02-uikit-introduction/Login-01.swift
+        filename: LoginViewController.swift
+        highlight: ["4-7"]
+      - title: Configure them
+        text: "In `viewDidLoad`, give the fields placeholders and borders, hide the password, title the button and colour the label red."
+        code: 02-uikit-introduction/Login-02.swift
+        filename: LoginViewController.swift
+        highlight: ["14-20"]
+
+  - title: Lay them out with a stack
+    intro: One vertical stack holds all four controls, and four lines pin it in place.
+    steps:
+      - title: Put the controls in a stack
+        text: "Create a vertical stack from the four controls, in screen order. Add it to `view` and pin its top, left and right edges. Run: the form appears and adapts when you rotate the simulator (⌘→)."
+        code: 02-uikit-introduction/Login-03.swift
+        filename: LoginViewController.swift
+        highlight: ["22-31"]
+      - title: Leave a control out on purpose
+        text: "Remove `errorLabel` from the array and run. Nothing fails to compile, and the label simply does not exist on screen. Put it back."
+        code: 02-uikit-introduction/Login-03.swift
+        filename: LoginViewController.swift
+        highlight: [22]
+
+  - title: React to the tap
+    intro: The button gets an action, and the action changes what the user sees.
+    steps:
+      - title: Connect the button
+        text: "Attach an action for `.touchUpInside` that calls `logIn()`. In `logIn()`, read the username — `?? \"\"` handles the optional — and show it in the label."
+        code: 02-uikit-introduction/Login-04.swift
+        filename: LoginViewController.swift
+        highlight: [33, "36-39"]
+      - title: Try it
+        text: "Run, type a username and tap **Log in**. The red label shows *No account for …*. There is no real check yet — the chapter project adds it."
+        code: 02-uikit-introduction/Login-04.swift
+        filename: LoginViewController.swift
+        highlight: ["36-39"]
+
+quiz:
+  question: "You add a `forgotPasswordButton` property and configure it in `viewDidLoad`, but it never appears. What is the most likely cause?"
+  options:
+    - Buttons need a frame before they can be configured
+    - It was never added to the stack’s `arrangedSubviews` or to the view tree
+    - "`viewDidLoad` runs too early for buttons"
+  answer: 1
+  explanation: Creating and configuring a control only builds it in memory. It exists on screen only once it is in the view tree — here, in the stack.

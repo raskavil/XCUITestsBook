@@ -1,0 +1,48 @@
+chapter: 02-uikit-introduction
+title: Add Accessibility Identifiers
+abstract: Give every Login control a stable identifier, then name the task list and each of its cells by task id instead of row number.
+minutes: 15
+order: 7
+
+sections:
+  - title: Name the Login controls
+    intro: "You continue with the Login screen from lesson 2.6 and give each control a `screen.element` name."
+    steps:
+      - title: Add four identifiers
+        text: "Below the configuration lines, set `accessibilityIdentifier` on all four controls, using the `login.` prefix. Run: nothing changes on screen, which is exactly the point."
+        code: 02-uikit-introduction/Login-05.swift
+        filename: LoginViewController.swift
+        highlight: ["22-25"]
+      - title: Find them like a tester
+        text: "Press ⇧⌘F and search the project for `accessibilityIdentifier`. Every identifier in the app is listed, with its file and line — the first thing you do on a new screen."
+        code: 02-uikit-introduction/Login-05.swift
+        filename: LoginViewController.swift
+        highlight: ["22-25"]
+
+  - title: Name the list and its cells
+    intro: The task list repeats the same kind of cell, so each cell needs a suffix taken from its data.
+    steps:
+      - title: Name the table
+        text: "Open **TaskListViewController.swift** and give the table view an identifier in `viewDidLoad`."
+        code: 02-uikit-introduction/TaskListViewController-03.swift
+        filename: TaskListViewController.swift
+        highlight: [9]
+      - title: Name each cell by task id
+        text: "In `cellForRowAt`, append the task’s `id` to the cell identifier. Task 2 is always `taskList.cell.2`, whatever row it is shown in."
+        code: 02-uikit-introduction/TaskListViewController-03.swift
+        filename: TaskListViewController.swift
+        highlight: [23, 29]
+      - title: Compare with the row number
+        text: "Temporarily use `indexPath.row` instead of `task.id`, and run. Task 1 becomes `taskList.cell.0` — and after a delete, every name shifts. Change it back to `task.id`."
+        code: 02-uikit-introduction/TaskListViewController-03.swift
+        filename: TaskListViewController.swift
+        highlight: [29]
+
+quiz:
+  question: Why use an identifier instead of the button’s visible text to find it in a test?
+  options:
+    - Identifiers make the app faster
+    - Visible text changes with copywriting and language; an identifier stays the same
+    - Tests cannot read visible text
+  answer: 1
+  explanation: Tests can read text, but text is not stable. An identifier is a name only tests use, so it survives renames, translations and redesigns.
