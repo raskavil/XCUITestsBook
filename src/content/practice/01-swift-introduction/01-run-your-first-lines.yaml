@@ -1,0 +1,53 @@
+chapter: 01-swift-introduction
+title: Run Your First Lines
+abstract: Create a playground, print a small test run header, then break a line on purpose and read what the compiler says.
+minutes: 15
+order: 1
+
+sections:
+  - title: Print a test header
+    intro: You write a few `print` lines and watch them appear in the console, in order.
+    steps:
+      - title: Create a playground
+        text: In Swift Playgrounds or Xcode, create a blank playground called **FirstLines**. Replace its contents with one `print` line and run it.
+        code: 01-swift-introduction/Hello-01.swift
+        filename: Contents.swift
+        highlight: [1]
+      - title: Add two more lines
+        text: Add a line for the test name and one for the app. Before you run, say out loud which line appears first in the console.
+        code: 01-swift-introduction/Hello-02.swift
+        filename: Contents.swift
+        highlight: ["2-3"]
+      - title: Comment the steps
+        text: Add a `//` comment above each group, then print three numbered steps. Run it — the comments never appear in the console.
+        code: 01-swift-introduction/Hello-03.swift
+        filename: Contents.swift
+        highlight: [1, "6-9"]
+
+  - title: Break it and read the error
+    intro: An error stops the whole program. You break one line on purpose to see what that looks like.
+    steps:
+      - title: Paste curly quotes
+        text: Replace the straight quotes on line 3 with curly ones (`“ ”`), as a word processor would. Run it. Nothing prints, not even line 2.
+        code: 01-swift-introduction/Hello-04.swift
+        filename: Contents.swift
+        highlight: [3]
+      - title: Read the message
+        text: Find the red marker next to line 3 and read the full message. Note that it points at the line, not at the word *quote*.
+        code: 01-swift-introduction/Hello-04.swift
+        filename: Contents.swift
+        highlight: [3]
+      - title: Fix it and add a check
+        text: Retype both quotes by hand and run again. Then add a fourth step that describes what the tester checks at the end.
+        code: 01-swift-introduction/Hello-05.swift
+        filename: Contents.swift
+        highlight: [3, 10]
+
+quiz:
+  question: What does the compiler do before your code runs?
+  options:
+    - It runs the first line to see whether it works
+    - It checks the whole file and stops with an error if anything is wrong
+    - It fixes small mistakes such as typos automatically
+  answer: 1
+  explanation: The compiler reads every line first. One error anywhere means nothing runs, which is why line 2 did not print either.

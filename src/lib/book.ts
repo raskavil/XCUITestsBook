@@ -34,6 +34,7 @@ export interface Stop {
   id: string;
   title: string;
   href: string;
+  order: number;
 }
 
 export interface Chapter {
@@ -53,7 +54,7 @@ function collect(list: Entry[], chapterId: string, prefix: string): Stop[] {
   return list
     .filter((e) => e.data.chapter.id === chapterId)
     .sort((a, b) => a.data.order - b.data.order)
-    .map((e) => ({ id: e.id, title: e.data.title, href: url(`${prefix}/${e.id}/`) }));
+    .map((e) => ({ id: e.id, title: e.data.title, href: url(`${prefix}/${e.id}/`), order: e.data.order }));
 }
 
 export async function getBook(): Promise<Chapter[]> {
@@ -74,11 +75,16 @@ export async function getBook(): Promise<Chapter[]> {
     }));
 }
 
-/** Reading order across the whole book: per chapter, Read → Practice → Challenge. */
+/**
+ * Reading order across the whole book: per chapter, lesson by lesson (`order`),
+ * and within a lesson Read → Practice → Challenge.
+ */
 export function flatten(chapters: Chapter[]) {
   return chapters.flatMap((ch) =>
-    modes.flatMap((mode) =>
-      ch[mode].map((s) => ({ ...s, mode, chapterNumber: ch.number, chapterTitle: ch.title })),
-    ),
+    modes
+      .flatMap((mode, rank) =>
+        ch[mode].map((s) => ({ ...s, mode, rank, chapterNumber: ch.number, chapterTitle: ch.title })),
+      )
+      .sort((a, b) => a.order - b.order || a.rank - b.rank),
   );
 }

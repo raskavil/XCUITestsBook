@@ -1,0 +1,58 @@
+chapter: 01-swift-introduction
+title: Handle a Missing Nickname
+abstract: Print an optional nickname both safely and unsafely, unwrap it with `if let` and `??`, then crash a playground with `!` to see why you avoid it.
+minutes: 15
+order: 7
+
+sections:
+  - title: Unwrap an optional nickname
+    intro: A nickname may or may not be set. You handle both cases with the two safe tools from the lesson.
+    steps:
+      - title: Print an optional
+        text: "Create a playground called **Optionals**. Declare `nickname` as `String?`, print it, set it to `nil`, print again. Note the `Optional(…)` wrapper and the warnings."
+        code: 01-swift-introduction/Optionals-01.swift
+        filename: Contents.swift
+        highlight: ["1-5"]
+      - title: Unwrap with if let
+        text: "Replace the prints with an `if let`. Inside the block, `name` is a plain `String`; the `else` block handles the missing case."
+        code: 01-swift-introduction/Optionals-02.swift
+        filename: Contents.swift
+        highlight: ["3-7"]
+      - title: Fall back with ??
+        text: "Add a `displayName` that uses `??` to fall back to `\"tester\"`. It is never `nil`, so it can go straight into text."
+        code: 01-swift-introduction/Optionals-03.swift
+        filename: Contents.swift
+        highlight: ["9-10"]
+      - title: Try the missing case
+        text: "Set `nickname` to `nil` on line 1 and run. Both the `else` block and the default take over, and nothing crashes."
+        code: 01-swift-introduction/Optionals-04.swift
+        filename: Contents.swift
+        highlight: [1]
+
+  - title: Optionals you did not create
+    intro: Many everyday operations return optionals. You use them safely, then see what `!` does when it is wrong.
+    steps:
+      - title: Read first and convert text
+        text: "In a new page, read `screens.first` with `if let` and turn the text `\"3\"` into a number with `Int(…)`. Option-click both to see their optional types."
+        code: 01-swift-introduction/OptionalsApi-01.swift
+        filename: Contents.swift
+        highlight: ["1-8"]
+      - title: Crash it with !
+        text: "Add an empty array and force-unwrap its `first`. The compiler is happy; the run stops with *Unexpectedly found nil while unwrapping an Optional value*."
+        code: 01-swift-introduction/OptionalsApi-02.swift
+        filename: Contents.swift
+        highlight: ["10-11"]
+      - title: Replace ! with a default
+        text: "Swap `!` for `?? \"No screens\"`. The empty case now has a meaning instead of a crash."
+        code: 01-swift-introduction/OptionalsApi-03.swift
+        filename: Contents.swift
+        highlight: [11]
+
+quiz:
+  question: What does `String?` mean, and what can `!` do to it?
+  options:
+    - It is a String that might be empty text; `!` makes it uppercase
+    - It holds either a String or nil; `!` unwraps it and crashes if it is nil
+    - It is a String the user typed; `!` checks that it is valid
+  answer: 1
+  explanation: "An optional holds a value or `nil`. `!` assumes there is a value — when there is not, the program crashes at run time."

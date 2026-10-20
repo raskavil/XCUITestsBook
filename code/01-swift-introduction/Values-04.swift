@@ -1,0 +1,11 @@
+// The test account every login check uses.
+let username: String = "tester"
+let password: String = "password123"
+let age: Int = 29
+let rating: Double = 4.5
+let isAdmin: Bool = false
+var failedAttempts = 0
+failedAttempts = failedAttempts + 1
+
+print("Logged in as \(username)")
+print("Failed attempts: \(failedAttempts)")

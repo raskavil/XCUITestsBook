@@ -1,0 +1,62 @@
+chapter: 01-swift-introduction
+title: Read a TaskBoard File
+abstract: Skim a 35-line file from the TaskBoard app in passes, then answer five questions about it without understanding every keyword.
+minutes: 20
+order: 9
+
+sections:
+  - title: Skim in passes
+    intro: You read the file from the outside in — names first, details last — and skip what you do not know yet.
+    steps:
+      - title: Paste the file
+        text: "Paste **LoginService.swift** into a new playground page. Do not try to understand it yet. Run it: it compiles, even though it prints nothing."
+        code: 01-swift-introduction/LoginService.swift
+        filename: LoginService.swift
+      - title: Mark the unknown keywords
+        text: "Write down every keyword you have not met: `import`, `final`, `class`, `private`, `static`, `guard`, `switch`. Then deliberately ignore them."
+        code: 01-swift-introduction/LoginService.swift
+        filename: LoginService.swift
+        highlight: [1, 4, "10-11", "13-15", 19, 22, 30]
+      - title: Find the names
+        text: "Pass 2 and 3: the type names after `class` and `enum`, and the lines starting with `func`. That is the file’s table of contents."
+        code: 01-swift-introduction/LoginService.swift
+        filename: LoginService.swift
+        highlight: [4, 5, 18, 29]
+
+  - title: Answer five questions
+    intro: Each step asks one question. Answer it in a `//` comment in your playground before you read the explanation.
+    steps:
+      - title: What is this file for?
+        text: "The `///` comment and the type name answer it: it checks the login form and remembers who logged in."
+        code: 01-swift-introduction/LoginService.swift
+        filename: LoginService.swift
+        highlight: ["3-4"]
+      - title: Which strings look like identifiers?
+        text: "Three strings follow the `screen.element` shape: `login.usernameField`, `login.passwordField` and `login.errorLabel`. These are what a UI test will search for."
+        code: 01-swift-introduction/LoginService.swift
+        filename: LoginService.swift
+        highlight: ["13-15"]
+      - title: What does login return?
+        text: "The signature ends in `-> LoginError?`, and the comment above confirms it: `nil` on success, otherwise the reason it failed."
+        code: 01-swift-introduction/LoginService.swift
+        filename: LoginService.swift
+        highlight: ["17-18"]
+      - title: When does the login fail?
+        text: "Even without knowing `guard`, the two `return` lines name the cases: an empty username, or a password that does not match the known user."
+        code: 01-swift-introduction/LoginService.swift
+        filename: LoginService.swift
+        highlight: ["19-24"]
+      - title: What does the user see?
+        text: "The quoted sentences in `errorMessage` are the texts the error label shows. A test for a wrong password expects *Wrong username or password.*"
+        code: 01-swift-introduction/LoginService.swift
+        filename: LoginService.swift
+        highlight: ["31-32"]
+
+quiz:
+  question: What do you look for first in unfamiliar code?
+  options:
+    - The bodies of the functions, line by line from the top
+    - Comments, type names, function signatures and quoted strings
+    - Every keyword you do not know, so you can look it up
+  answer: 1
+  explanation: Names, signatures and strings tell you what a file is for and what a test can search for. Read bodies only when a question is still open.

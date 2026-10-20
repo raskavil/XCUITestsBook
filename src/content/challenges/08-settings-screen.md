@@ -1,11 +1,11 @@
 ---
-chapter: 06-page-object
+chapter: 08-page-object
 title: Wrap the Settings Screen
 abstract: Turn a test full of raw queries into one that uses a SettingsScreen page object.
 minutes: 20
 difficulty: core
-starter: 06-page-object/SettingsTests-starter.swift
-solution: 06-page-object/SettingsTests-solution.swift
+starter: 08-page-object/SettingsTests-starter.swift
+solution: 08-page-object/SettingsTests-solution.swift
 doneWhen:
   - "`SettingsTests` contains no `app.switches[…]`, `app.otherElements[…]` or `app.staticTexts[…]` calls."
   - "`SettingsScreen` has a static `open(in:)` that taps the Settings tab and returns the screen."

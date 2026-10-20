@@ -1,0 +1,48 @@
+chapter: 01-swift-introduction
+title: Write a Pass or Fail Check
+abstract: Compare an expected and an actual task count, print PASS or FAIL, then extend the check so it says exactly what went wrong.
+minutes: 15
+order: 4
+
+sections:
+  - title: Compare two numbers
+    intro: A comparison gives you `true` or `false`; `if` turns that answer into a result a person can read.
+    steps:
+      - title: Print the raw comparison
+        text: Create a playground called **Checks**. Store an expected and an actual task count, and print two comparisons. The sidebar shows `true` for both.
+        code: 01-swift-introduction/Compare-01.swift
+        filename: Contents.swift
+        highlight: ["4-5"]
+      - title: Turn it into PASS or FAIL
+        text: Replace the two `print` lines with an `if` / `else`. The failure message includes both numbers, so it explains itself.
+        code: 01-swift-introduction/Compare-02.swift
+        filename: Contents.swift
+        highlight: ["4-8"]
+      - title: Make the check fail
+        text: Change the actual count to `2` and run again. Only the `else` block runs now.
+        code: 01-swift-introduction/Compare-03.swift
+        filename: Contents.swift
+        highlight: [2]
+
+  - title: Check more than one thing
+    intro: Real checks combine conditions. You add a title check, then make the message say which condition failed.
+    steps:
+      - title: Combine two conditions
+        text: Add an expected and an actual screen title, and require both checks with `&&`. The test still fails — but the message only mentions the count.
+        code: 01-swift-introduction/Compare-04.swift
+        filename: Contents.swift
+        highlight: ["3-4", 6]
+      - title: Report the exact failure
+        text: Split the check with `else if`. The title is checked first, because a wrong screen makes the count meaningless. Try a wrong title and a wrong count.
+        code: 01-swift-introduction/Compare-05.swift
+        filename: Contents.swift
+        highlight: ["6-12"]
+
+quiz:
+  question: What is the difference between `=` and `==`?
+  options:
+    - There is none; Swift accepts both in an `if`
+    - "`=` assigns a value, `==` compares two values and gives a `Bool`"
+    - "`=` compares numbers, `==` compares text"
+  answer: 1
+  explanation: "`count = 3` stores 3 in `count`; `count == 3` asks whether `count` is 3. Only the second one belongs in a condition."

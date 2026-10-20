@@ -28,9 +28,9 @@ You write **content only**: Markdown, YAML and Swift files. Do not edit `src/com
 
 **Golden examples — read these before writing a new chapter and match their shape, depth and tone:**
 
-- `src/content/reading/06-page-object.md`
-- `src/content/practice/06-build-a-page-object.yaml`
-- `src/content/challenges/06-settings-screen.md`
+- `src/content/reading/08-page-object.md`
+- `src/content/practice/08-build-a-page-object.yaml`
+- `src/content/challenges/08-settings-screen.md`
 
 ## The three modes
 
@@ -43,7 +43,7 @@ Purpose: introduce the idea, show why it matters, and show small examples. Not a
 
 ```yaml
 ---
-chapter: 06-page-object      # id from chapters.yaml
+chapter: 08-page-object      # id from chapters.yaml
 title: The Page Object Pattern
 abstract: One or two sentences, 20–220 characters. Shown under the title.
 minutes: 8                   # honest reading time
@@ -66,7 +66,7 @@ Body rules:
 Purpose: the reader builds something real, one small change at a time. Rendered as the interactive stepper.
 
 ```yaml
-chapter: 06-page-object
+chapter: 08-page-object
 title: Build a Page Object          # imperative: "Build…", "Add…", "Make…"
 abstract: …
 minutes: 25
@@ -76,11 +76,11 @@ sections:                           # 2–4 sections
     steps:                          # 2–5 steps per section, max 8
       - title: Expose the controls  # ≤ 60 characters, imperative
         text: One or two sentences of inline Markdown, ≤ 400 characters. No lists or paragraphs.
-        code: 06-page-object/LoginScreen-02.swift   # path under code/
+        code: 08-page-object/LoginScreen-02.swift   # path under code/
         filename: LoginScreen.swift                 # what the reader's file is called
         highlight: ["6-8"]                          # lines changed in THIS step
         preview:                                    # optional
-          image: previews/06-page-object/login.png  # under public/
+          image: previews/08-page-object/login.png  # under public/
           alt: The login screen with email and password fields
 quiz:                               # optional but recommended
   question: …
@@ -104,13 +104,13 @@ Purpose: the reader applies the chapter without guidance. They get a brief, star
 
 ```yaml
 ---
-chapter: 06-page-object
+chapter: 08-page-object
 title: Wrap the Settings Screen
 abstract: …
 minutes: 20
 difficulty: core            # warm-up | core | stretch
-starter: 06-page-object/SettingsTests-starter.swift
-solution: 06-page-object/SettingsTests-solution.swift
+starter: 08-page-object/SettingsTests-starter.swift
+solution: 08-page-object/SettingsTests-solution.swift
 doneWhen:                   # 1–6 checkable acceptance criteria (inline Markdown)
   - …
 hints:                      # 1–4, from gentle nudge to near-answer

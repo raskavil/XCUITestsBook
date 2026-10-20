@@ -1,0 +1,58 @@
+chapter: 01-swift-introduction
+title: Loop Over the App’s Screens
+abstract: Keep the TaskBoard screen names in an array, read items by index, crash it once on purpose, then repeat test steps with a loop.
+minutes: 15
+order: 5
+
+sections:
+  - title: Read items by index
+    intro: An array keeps values in order. You read single items and see what happens when you ask for one that is not there.
+    steps:
+      - title: Create the array
+        text: Create a playground called **Screens** with an array of the five TaskBoard screens. Print the array and its `count`.
+        code: 01-swift-introduction/Lists-01.swift
+        filename: Contents.swift
+        highlight: [1, "3-4"]
+      - title: Read the first and last item
+        text: Print the items at index `0` and `4`. Check that you get Login and Settings.
+        code: 01-swift-introduction/Lists-02.swift
+        filename: Contents.swift
+        highlight: ["5-6"]
+      - title: Ask for one too many
+        text: "Add `print(screens[5])` and run. The playground stops with *Index out of range*. Note that the earlier lines still printed — this is a crash while running, not a compiler error."
+        code: 01-swift-introduction/Lists-03.swift
+        filename: Contents.swift
+        highlight: [7]
+      - title: Use count for the last item
+        text: "Delete the crashing line and replace index `4` with `screens.count - 1`. It still works if a screen is added later."
+        code: 01-swift-introduction/Lists-04.swift
+        filename: Contents.swift
+        highlight: [6]
+
+  - title: Repeat steps with a loop
+    intro: A `for-in` loop runs the same steps for every item — the core of data-driven testing.
+    steps:
+      - title: Loop over the screens
+        text: Replace everything below the array with a `for-in` loop that prints one test step per screen.
+        code: 01-swift-introduction/Lists-05.swift
+        filename: Contents.swift
+        highlight: ["3-5"]
+      - title: Drive a check with data
+        text: Add an array of invalid email addresses and loop over it. The steps are written once and run five times.
+        code: 01-swift-introduction/Lists-06.swift
+        filename: Contents.swift
+        highlight: ["7-11"]
+      - title: Add a case
+        text: "Change `let` to `var` and `append` one more invalid address. The loop picks it up without any other change."
+        code: 01-swift-introduction/Lists-07.swift
+        filename: Contents.swift
+        highlight: ["7-8"]
+
+quiz:
+  question: What is the index of the first item in an array?
+  options:
+    - "0"
+    - "1"
+    - It depends on the array’s type
+  answer: 0
+  explanation: Swift counts positions from 0. In a five-item array, the indexes are 0 to 4, so the last index is always `count - 1`.

@@ -1,5 +1,5 @@
 ---
-chapter: 06-page-object
+chapter: 08-page-object
 title: The Page Object Pattern
 abstract: Wrap each screen in a small Swift type so your tests describe what the user does, not how the screen is built.
 minutes: 8
