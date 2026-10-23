@@ -29,6 +29,12 @@ const fullTitle = title === book.title ? title : `${title} — ${book.title}`;
         var t = localStorage.getItem('theme');
         if (t) document.documentElement.dataset.theme = t;
       } catch (e) {}
+      // Chapter overview: open on wide screens unless the reader closed it, always closed on narrow ones.
+      var navOpen = innerWidth >= 1000;
+      try {
+        if (localStorage.getItem('nav') === 'closed') navOpen = false;
+      } catch (e) {}
+      document.documentElement.dataset.nav = navOpen ? 'open' : 'closed';
     </script>
   </head>
   <body>

@@ -1,0 +1,27 @@
+---
+import Base from './Base.astro';
+import ChapterBar from '../components/ChapterBar.astro';
+import ChapterNav from '../components/ChapterNav.astro';
+import Pager from '../components/Pager.astro';
+import type { Chapter, Mode } from '../lib/book';
+
+interface Props {
+  title: string;
+  description?: string;
+  chapters: Chapter[];
+  chapter: Chapter;
+  mode: Mode;
+  href: string;
+}
+const { title, description, chapters, chapter, mode, href } = Astro.props;
+---
+<Base title={title} description={description}>
+  <ChapterBar chapter={chapter} mode={mode} />
+  <div class="shell">
+    <ChapterNav chapters={chapters} chapter={chapter} href={href} />
+    <div class="shell-main">
+      <slot />
+      <Pager chapters={chapters} href={href} />
+    </div>
+  </div>
+</Base>

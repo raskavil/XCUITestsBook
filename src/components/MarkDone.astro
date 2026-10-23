@@ -1,0 +1,12 @@
+---
+import type { Mode } from '../lib/book';
+
+interface Props {
+  mode: Mode;
+  id: string;
+}
+const { mode, id } = Astro.props;
+---
+<div class="wrap complete-row">
+  <button type="button" class="btn btn-primary" data-complete={`uitb:${mode}:${id}`} aria-pressed="false" hidden>Mark as completed</button>
+</div>

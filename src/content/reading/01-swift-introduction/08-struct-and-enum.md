@@ -1,7 +1,7 @@
 ---
 chapter: 01-swift-introduction
 title: "Grouping Data: struct and enum"
-abstract: A `struct` groups values that belong together; an `enum` lists a fixed set of choices. Together they describe test users and screens.
+abstract: A struct groups values that belong together; an enum lists a fixed set of choices. Together they describe test users and screens.
 minutes: 8
 order: 8
 ---

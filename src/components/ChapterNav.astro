@@ -1,0 +1,86 @@
+---
+import { modeLabel, modes, type Chapter, type Mode } from '../lib/book';
+
+interface Props {
+  chapters: Chapter[];
+  chapter: Chapter;
+  href: string;
+}
+const { chapters, chapter, href } = Astro.props;
+
+interface Item {
+  id: string;
+  title: string;
+  href: string;
+  mode: Mode;
+}
+interface Lesson {
+  heading?: string;
+  items: Item[];
+}
+
+/** Chapters with several `order` values are shown as numbered lessons; the rest as one flat list. */
+function lessonsOf(c: Chapter): Lesson[] {
+  const orders = [...new Set(modes.flatMap((m) => c[m].map((s) => s.order)))].sort((a, b) => a - b);
+  return orders.map((order) => {
+    const items = modes.flatMap((mode) => c[mode].filter((s) => s.order === order).map((s) => ({ ...s, mode })));
+    const lead = items.find((i) => i.mode === 'read') ?? items[0];
+    return { heading: orders.length > 1 ? `${c.number}.${order} ${lead?.title ?? ''}` : undefined, items };
+  });
+}
+const pageCount = (c: Chapter) => modes.reduce((n, m) => n + c[m].length, 0);
+const totalPages = chapters.reduce((n, c) => n + pageCount(c), 0);
+---
+<div class="nav-backdrop" data-nav-close></div>
+<aside class="shell-nav" id="chapter-nav" aria-label="Chapter overview">
+  <div class="nav-inner">
+    <div class="nav-head">
+      <p class="nav-heading">Chapter overview</p>
+      <button type="button" class="nav-close" data-nav-close aria-label="Close chapter overview">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      </button>
+      <p class="nav-total" data-total-progress data-total={totalPages} hidden></p>
+    </div>
+    {
+      chapters.map((c) => pageCount(c) === 0 ? (
+        <div class="nav-chapter is-empty">
+          <div class="nav-row">
+            <span class="nav-num">{c.number}</span>
+            <span class="nav-ctitle">{c.title}</span>
+            <span class="nav-count">Soon</span>
+          </div>
+        </div>
+      ) : (
+        <details class="nav-chapter" open={c.id === chapter.id} data-nav-chapter>
+          <summary>
+            <span class="nav-num">{c.number}</span>
+            <span class="nav-ctitle">{c.title}</span>
+            <span class="nav-count" data-count hidden></span>
+            <span class="nav-bar" aria-hidden="true"><span data-bar></span></span>
+          </summary>
+          {lessonsOf(c).map((lesson) => (
+            <div class="nav-lesson">
+              {lesson.heading && <p class="nav-lesson-title">{lesson.heading}</p>}
+              <ul class="nav-items">
+                {lesson.items.map((item) => (
+                  <li class="nav-item">
+                    <input
+                      type="checkbox"
+                      class="nav-check"
+                      data-done-key={`uitb:${item.mode}:${item.id}`}
+                      aria-label={`Mark as done: ${modeLabel[item.mode]}, ${item.title}`}
+                    />
+                    <a class="nav-link" href={item.href} aria-current={item.href === href ? 'page' : undefined}>
+                      <span class="nav-mode">{modeLabel[item.mode]}</span>
+                      <span class="nav-title">{item.title}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </details>
+      ))
+    }
+  </div>
+</aside>

@@ -1,10 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
-import Base from '../../layouts/Base.astro';
-import ChapterBar from '../../components/ChapterBar.astro';
+import Chapter from '../../layouts/Chapter.astro';
+import MarkDone from '../../components/MarkDone.astro';
 import Stepper from '../../components/Stepper.astro';
 import Quiz from '../../components/Quiz.astro';
-import Pager from '../../components/Pager.astro';
 import { getBook, url } from '../../lib/book';
 import { assertPublic, loadCode } from '../../lib/code';
 import { mdInline } from '../../lib/md';
@@ -41,8 +40,7 @@ const sections = await Promise.all(
   })),
 );
 ---
-<Base title={d.title} description={d.abstract}>
-  <ChapterBar chapter={chapter} mode="practice" />
+<Chapter title={d.title} description={d.abstract} chapters={chapters} chapter={chapter} mode="practice" href={url(`practice/${entry.id}/`)}>
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-main">
@@ -95,5 +93,5 @@ const sections = await Promise.all(
     )
   }
 
-  <Pager chapters={chapters} href={url(`practice/${entry.id}/`)} />
-</Base>
+  <MarkDone mode="practice" id={entry.id} />
+</Chapter>

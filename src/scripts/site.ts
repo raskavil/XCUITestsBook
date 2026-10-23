@@ -118,21 +118,78 @@ document.querySelectorAll<HTMLElement>('[data-hints]').forEach((box) => {
   update();
 });
 
-// Progress (stored per browser)
-document.querySelectorAll<HTMLButtonElement>('[data-complete]').forEach((btn) => {
-  const key = btn.dataset.complete!;
-  const sync = () => {
-    const done = load(key) === '1';
+// Progress (stored per browser). One key per page: uitb:<mode>:<page id>.
+// Every control that shows or sets progress reads the same keys, so they stay in sync.
+const isDone = (key: string) => load(key) === '1';
+const setDone = (key: string, done: boolean) => {
+  store(key, done ? '1' : null);
+  refreshProgress();
+};
+
+function refreshProgress() {
+  document.querySelectorAll<HTMLInputElement>('[data-done-key]').forEach((box) => {
+    box.checked = isDone(box.dataset.doneKey!);
+  });
+  document.querySelectorAll<HTMLButtonElement>('[data-complete]').forEach((btn) => {
+    const done = isDone(btn.dataset.complete!);
     btn.setAttribute('aria-pressed', String(done));
     btn.textContent = done ? 'Completed' : 'Mark as completed';
-  };
-  btn.addEventListener('click', () => {
-    store(key, load(key) === '1' ? null : '1');
-    sync();
   });
+  document.querySelectorAll<HTMLElement>('[data-progress-key]').forEach((el) => {
+    el.classList.toggle('is-done', isDone(el.dataset.progressKey!));
+  });
+  document.querySelectorAll<HTMLElement>('[data-nav-chapter]').forEach((chapter) => {
+    const boxes = [...chapter.querySelectorAll<HTMLInputElement>('[data-done-key]')];
+    const done = boxes.filter((b) => b.checked).length;
+    const count = chapter.querySelector<HTMLElement>('[data-count]');
+    const bar = chapter.querySelector<HTMLElement>('[data-bar]');
+    if (count) {
+      count.hidden = false;
+      count.textContent = `${done}/${boxes.length}`;
+    }
+    if (bar) bar.style.transform = `scaleX(${boxes.length ? done / boxes.length : 0})`;
+    chapter.classList.toggle('is-complete', boxes.length > 0 && done === boxes.length);
+  });
+  const total = document.querySelector<HTMLElement>('[data-total-progress]');
+  if (total) {
+    const done = document.querySelectorAll('[data-done-key]:checked').length;
+    total.hidden = false;
+    total.textContent = `${done} of ${total.dataset.total} pages done`;
+  }
+}
+
+document.querySelectorAll<HTMLInputElement>('[data-done-key]').forEach((box) => {
+  box.addEventListener('change', () => setDone(box.dataset.doneKey!, box.checked));
+});
+document.querySelectorAll<HTMLButtonElement>('[data-complete]').forEach((btn) => {
+  btn.addEventListener('click', () => setDone(btn.dataset.complete!, !isDone(btn.dataset.complete!)));
   btn.hidden = false;
-  sync();
 });
-document.querySelectorAll<HTMLElement>('[data-progress-key]').forEach((el) => {
-  if (load(el.dataset.progressKey!) === '1') el.classList.add('is-done');
+// Another tab changed progress.
+addEventListener('storage', (e) => {
+  if (e.key?.startsWith('uitb:')) refreshProgress();
 });
+refreshProgress();
+
+// Chapter overview: open or close, and keep the current page in view.
+const navToggles = document.querySelectorAll<HTMLButtonElement>('[data-nav-toggle]');
+const wideNav = matchMedia('(min-width: 1000px)');
+const setNav = (open: boolean, remember = false) => {
+  root.dataset.nav = open ? 'open' : 'closed';
+  navToggles.forEach((b) => b.setAttribute('aria-expanded', String(open)));
+  if (remember && wideNav.matches) store('nav', open ? 'open' : 'closed');
+};
+navToggles.forEach((b) => b.addEventListener('click', () => setNav(root.dataset.nav !== 'open', true)));
+document.querySelectorAll('[data-nav-close]').forEach((el) => el.addEventListener('click', () => setNav(false)));
+addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !wideNav.matches && root.dataset.nav === 'open') setNav(false);
+});
+wideNav.addEventListener('change', () => setNav(wideNav.matches && load('nav') !== 'closed'));
+setNav(root.dataset.nav === 'open');
+
+const nav = document.querySelector<HTMLElement>('.shell-nav');
+const current = nav?.querySelector<HTMLElement>('[aria-current="page"]');
+if (nav && current) {
+  const offset = current.getBoundingClientRect().top - nav.getBoundingClientRect().top;
+  nav.scrollTop = Math.max(0, nav.scrollTop + offset - nav.clientHeight / 3);
+}

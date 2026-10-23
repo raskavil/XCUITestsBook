@@ -1,7 +1,7 @@
 ---
 chapter: 01-swift-introduction
 title: Lists and Loops
-abstract: An array keeps many values in order, counted from index 0, and a `for-in` loop repeats the same steps for every one of them.
+abstract: An array keeps many values in order, counted from index 0, and a for-in loop repeats the same steps for every one of them.
 minutes: 8
 order: 5
 ---

@@ -1,7 +1,7 @@
 ---
 chapter: 02-uikit-introduction
 title: One Screen, One View Controller
-abstract: "A `UIViewController` owns one screen. Learn what `class LoginViewController: UIViewController` means, and why loaded is not the same as visible."
+abstract: "A UIViewController owns one screen. Learn what class LoginViewController: UIViewController means, and why loaded is not the same as visible."
 minutes: 8
 order: 4
 ---

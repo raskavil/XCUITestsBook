@@ -1,7 +1,7 @@
 ---
 chapter: 01-swift-introduction
 title: Filter With a Closure
-abstract: Replace a loop that collects invalid emails with one call to `filter`, using a closure — a Nice-to-know topic you will meet in every UI test file.
+abstract: Replace a loop that collects invalid emails with one call to filter, using a closure — a Nice-to-know topic you will meet in every UI test file.
 minutes: 20
 difficulty: stretch
 order: 6

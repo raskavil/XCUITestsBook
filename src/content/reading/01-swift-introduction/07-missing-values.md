@@ -1,7 +1,7 @@
 ---
 chapter: 01-swift-introduction
 title: Values That Might Be Missing
-abstract: An optional such as `String?` holds either a value or `nil`. Unwrap it safely with `if let`, or give it a default with `??`.
+abstract: An optional such as String? holds either a value or nil. Unwrap it safely with if let, or give it a default with ??.
 minutes: 8
 order: 7
 ---

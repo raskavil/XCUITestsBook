@@ -1,7 +1,7 @@
 ---
 chapter: 01-swift-introduction
 title: Storing Values
-abstract: Give values a name with `let` or `var`, learn the four basic types, and build text from them with string interpolation.
+abstract: Give values a name with let or var, learn the four basic types, and build text from them with string interpolation.
 minutes: 8
 order: 3
 ---

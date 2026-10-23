@@ -1,7 +1,7 @@
 ---
 chapter: 02-uikit-introduction
 title: Connecting the Screen to Code
-abstract: Create the views in code, line them up in a `UIStackView`, pin that one stack to the safe area, and run code when the user taps.
+abstract: Create the views in code, line them up in a UIStackView, pin that one stack to the safe area, and run code when the user taps.
 minutes: 9
 order: 6
 ---

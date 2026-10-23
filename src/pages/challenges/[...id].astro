@@ -1,10 +1,8 @@
 ---
 import { getCollection, render } from 'astro:content';
-import Base from '../../layouts/Base.astro';
-import ChapterBar from '../../components/ChapterBar.astro';
+import Chapter from '../../layouts/Chapter.astro';
 import CodePanel from '../../components/CodePanel.astro';
 import Quiz from '../../components/Quiz.astro';
-import Pager from '../../components/Pager.astro';
 import { getBook, url } from '../../lib/book';
 import { loadCode } from '../../lib/code';
 import { mdInline } from '../../lib/md';
@@ -23,8 +21,7 @@ const starter = await loadCode(d.starter);
 const solution = await loadCode(d.solution);
 const difficultyLabel = { 'warm-up': 'Warm-up', core: 'Core', stretch: 'Stretch' }[d.difficulty];
 ---
-<Base title={d.title} description={d.abstract}>
-  <ChapterBar chapter={chapter} mode="challenge" />
+<Chapter title={d.title} description={d.abstract} chapters={chapters} chapter={chapter} mode="challenge" href={url(`challenges/${entry.id}/`)}>
 
   <div class="wrap challenge-head">
     <div class="badges">
@@ -79,5 +76,4 @@ const difficultyLabel = { 'warm-up': 'Warm-up', core: 'Core', stretch: 'Stretch'
     )
   }
 
-  <Pager chapters={chapters} href={url(`challenges/${entry.id}/`)} />
-</Base>
+</Chapter>

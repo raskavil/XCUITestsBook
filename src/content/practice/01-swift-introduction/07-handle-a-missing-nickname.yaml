@@ -1,6 +1,6 @@
 chapter: 01-swift-introduction
 title: Handle a Missing Nickname
-abstract: Print an optional nickname both safely and unsafely, unwrap it with `if let` and `??`, then crash a playground with `!` to see why you avoid it.
+abstract: Print an optional nickname both safely and unsafely, unwrap it with if let and ??, then crash a playground with ! to see why you avoid it.
 minutes: 15
 order: 7
 

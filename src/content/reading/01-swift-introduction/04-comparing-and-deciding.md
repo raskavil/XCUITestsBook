@@ -1,7 +1,7 @@
 ---
 chapter: 01-swift-introduction
 title: Comparing and Deciding
-abstract: Comparisons turn two values into `true` or `false`, and `if` / `else` uses that answer to choose which lines run.
+abstract: Comparisons turn two values into true or false, and if / else uses that answer to choose which lines run.
 minutes: 7
 order: 4
 ---

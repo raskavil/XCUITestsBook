@@ -1,7 +1,7 @@
 ---
 chapter: 02-uikit-introduction
 title: Accessibility Identifiers
-abstract: An `accessibilityIdentifier` is a hidden name tag for tests, set in code right where the view is created. It stays stable when texts change.
+abstract: An accessibilityIdentifier is a hidden name tag for tests, set in code right where the view is created. It stays stable when texts change.
 minutes: 8
 order: 7
 ---

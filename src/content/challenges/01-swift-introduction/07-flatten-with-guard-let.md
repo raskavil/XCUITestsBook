@@ -1,7 +1,7 @@
 ---
 chapter: 01-swift-introduction
 title: Flatten It With guard let
-abstract: Rewrite a function buried under three nested `if let`s using `guard let`, a Nice-to-know topic, without changing a single output.
+abstract: Rewrite a function buried under three nested if lets using guard let, a Nice-to-know topic, without changing a single output.
 minutes: 20
 difficulty: core
 order: 7

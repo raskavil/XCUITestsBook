@@ -1,8 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
-import Base from '../../layouts/Base.astro';
-import ChapterBar from '../../components/ChapterBar.astro';
-import Pager from '../../components/Pager.astro';
+import Chapter from '../../layouts/Chapter.astro';
+import MarkDone from '../../components/MarkDone.astro';
 import { getBook, url } from '../../lib/book';
 
 export async function getStaticPaths() {
@@ -16,8 +15,7 @@ const chapters = await getBook();
 const chapter = chapters.find((c) => c.id === entry.data.chapter.id)!;
 const toc = headings.filter((h) => h.depth === 2);
 ---
-<Base title={entry.data.title} description={entry.data.abstract}>
-  <ChapterBar chapter={chapter} mode="read" />
+<Chapter title={entry.data.title} description={entry.data.abstract} chapters={chapters} chapter={chapter} mode="read" href={url(`read/${entry.id}/`)}>
   <div class="wrap reading">
     <article class="reading-main">
       <p class="page-kicker">Chapter {chapter.number}</p>
@@ -44,5 +42,5 @@ const toc = headings.filter((h) => h.depth === 2);
       )
     }
   </div>
-  <Pager chapters={chapters} href={url(`read/${entry.id}/`)} />
-</Base>
+  <MarkDone mode="read" id={entry.id} />
+</Chapter>
